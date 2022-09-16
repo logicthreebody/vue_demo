@@ -1,22 +1,16 @@
 <template>
   <div>
-    <input /><button @click="query">查询</button>
-    <ol>
-      <li v-for="todo in todos" index="todo.id">
-        {{todo.name}}------{{todo.description}}
-      </li>
-    </ol>
+    <input v-model="keyword"/><button @click="query">查询</button>
   </div>
 </template>
 
 <script>
 import axios from "axios"
-
 export default {
   name: "TodoQuery",
   data(){
     return {
-      todos:[]
+      keyword:""
     }
   },
   methods:{
@@ -26,7 +20,7 @@ export default {
             console.log(response.data)
             const data = response.data;
             // const flag = data.flag;
-            this.todos = data.data;
+            this.$bus.$emit("getTodos",data.data)
           },
           error => {
             console.log(error.message)

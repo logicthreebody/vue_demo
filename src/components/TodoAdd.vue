@@ -12,14 +12,16 @@ export default {
   data(){
     return {todo_name:"",description:""}
   },
+  props:['getAllTodo'],
   methods:{
     add(){
       axios.post("http://127.0.0.1:8080/todos",
           {todo_name:this.todo_name,description:this.description},
         {headers: {'Content-Type': 'multipart/form-data'}}).then(
           response => {
-            console.log(response.data)
             response.data.flag
+            console.log('保存成功')
+            this.getAllTodo();
           },
           error =>{
             console.log(error.message)
